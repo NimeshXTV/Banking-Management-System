@@ -19,7 +19,7 @@ public class BankingApp {
         try{
             Connection connection = DriverManager.getConnection(url,username,password);
             Scanner sc = new Scanner(System.in);
-            User user = new User();
+            User user = new User(connection,sc);
             Accounts accounts  = new Accounts();
             AccountManager accountManager = new AccountManager();
 
@@ -34,7 +34,7 @@ public class BankingApp {
                 int choice = sc.nextInt();
                 switch (choice){
                     case 1:
-//                        user.register();
+                        user.register();
                 }
 
             }
