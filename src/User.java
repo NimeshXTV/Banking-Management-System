@@ -2,6 +2,7 @@ import com.mysql.cj.conf.ConnectionPropertiesTransform;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -33,5 +34,19 @@ public class User {
         catch (SQLException e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public boolean userExists(String email){
+        String query = "SELECT 1 FROM user where email = ? LIMIT 1";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+            preparedStatement.setString(1,email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                return resultSet.next();
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }

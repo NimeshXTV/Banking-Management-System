@@ -25,7 +25,6 @@ public class BankingApp {
 
             while(true){
                 System.out.println("WELCOME TO BANKING MANAGEMENT SYSTEM");
-                System.out.println();
                 System.out.println("1. Register");
                 System.out.println("2. Login");
                 System.out.println("3. Exit");
@@ -35,6 +34,15 @@ public class BankingApp {
                 switch (choice){
                     case 1:
                         user.register();
+                        break;
+
+                    case 2:
+                        user.login();
+
+                    case 3:
+                        System.out.println("THANKS FOR USING BANKING SYSTEM :)");
+                        System.out.println("EXITING SYSTEM!");
+                        return;
                 }
 
             }
