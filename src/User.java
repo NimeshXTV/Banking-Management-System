@@ -1,5 +1,3 @@
-import com.mysql.cj.conf.ConnectionPropertiesTransform;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,8 +5,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class User {
-    private Connection connection;
-    private Scanner sc;
+    Connection connection;
+    Scanner sc;
     public User(Connection connection, Scanner sc){
         this.connection = connection;
         this.sc = sc;
@@ -29,8 +27,8 @@ public class User {
                 System.out.println("User already exists ");
                 return;
             }
-            String query = "INSERT INTO user (full_name,email,password) VALUES(?,?,?)";
-            try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+            String register_query = "INSERT INTO user (full_name,email,password) VALUES(?,?,?)";
+            try(PreparedStatement preparedStatement = connection.prepareStatement(register_query)){
                 preparedStatement.setString(1,fullName);
                 preparedStatement.setString(2,email);
                 preparedStatement.setString(3,password);
@@ -50,8 +48,8 @@ public class User {
     }
 
     public boolean userExists(String email){
-        String query = "SELECT 1 FROM user where email = ? LIMIT 1";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        String userExist_query = "SELECT 1 FROM user where email = ? LIMIT 1";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(userExist_query)){
             preparedStatement.setString(1,email);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
                 return resultSet.next();
@@ -61,5 +59,31 @@ public class User {
             System.out.println(e.getMessage());
         }
         return false;
+    }
+
+    public String login(){
+        System.out.print("Email : ");
+        String email = sc.nextLine();
+        System.out.print("Password : ");
+        String password = sc.nextLine();
+
+        String login_query = "SELECT * FROM user where email = ? AND password = ?";
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(login_query)){
+            preparedStatement.setString(1,email);
+            preparedStatement.setString(2,password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                return email;
+            }
+            else {
+                return null;
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }
