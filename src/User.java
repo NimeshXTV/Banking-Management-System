@@ -17,8 +17,6 @@ public class User {
     String password;
     public void register(){
         try{
-            String query = "INSERT INTO user (full_name,email,password) VALUES(?,?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
             System.out.println("Registration Page");
             System.out.print("Full Name : ");
             String fullName = sc.nextLine();
@@ -27,9 +25,24 @@ public class User {
             System.out.print("Password : ");
             String password = sc.nextLine();
 
-            preparedStatement.setString(1,fullName);
-            preparedStatement.setString(2,email);
-            preparedStatement.setString(3,password);
+            if(userExists(email)){
+                System.out.println("User already exists ");
+                return;
+            }
+            String query = "INSERT INTO user (full_name,email,password) VALUES(?,?,?)";
+            try(PreparedStatement preparedStatement = connection.prepareStatement(query)){
+                preparedStatement.setString(1,fullName);
+                preparedStatement.setString(2,email);
+                preparedStatement.setString(3,password);
+
+                int rowsInserted = preparedStatement.executeUpdate();
+                if(rowsInserted > 0){
+                    System.out.println("Registration Done Successfully");
+                }
+                else{
+                    System.out.println("Registration failed !!!");
+                }
+            }
         }
         catch (SQLException e){
             System.out.println(e.getMessage());
