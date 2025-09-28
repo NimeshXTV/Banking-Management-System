@@ -5,8 +5,9 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class User {
-    Connection connection;
-    Scanner sc;
+    private final Connection connection;
+    private final Scanner sc;
+
     public User(Connection connection, Scanner sc){
         this.connection = connection;
         this.sc = sc;
@@ -14,7 +15,6 @@ public class User {
     String email;
     String password;
     public void register(){
-        try{
             System.out.println("Registration Page");
             System.out.print("Full Name : ");
             String fullName = sc.nextLine();
@@ -41,10 +41,9 @@ public class User {
                     System.out.println("Registration failed !!!");
                 }
             }
-        }
-        catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
+            catch (SQLException e) {
+                e.printStackTrace();
+            }
     }
 
     public boolean userExists(String email){
@@ -55,8 +54,8 @@ public class User {
                 return resultSet.next();
             }
         }
-        catch (SQLException e){
-            System.out.println(e.getMessage());
+        catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }
@@ -81,8 +80,8 @@ public class User {
                 return null;
             }
         }
-        catch (SQLException e){
-            System.out.println(e.getMessage());
+        catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }

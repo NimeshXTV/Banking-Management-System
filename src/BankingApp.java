@@ -37,7 +37,7 @@ public class BankingApp {
                         break;
 
                     case 2:
-                        user.login();
+                        String email = user.login();
 
                     case 3:
                         System.out.println("THANKS FOR USING BANKING SYSTEM :)");
@@ -47,8 +47,8 @@ public class BankingApp {
 
             }
         }
-        catch (SQLException e){
-            e.getMessage();
+        catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
