@@ -38,6 +38,9 @@ public class BankingApp {
 
                     case 2:
                         String email = user.login();
+                        if(email!=null){
+                            System.out.println("User Logged In !");
+                        }
 
                     case 3:
                         System.out.println("THANKS FOR USING BANKING SYSTEM :)");

@@ -19,9 +19,9 @@ public class User {
             System.out.print("Full Name : ");
             String fullName = sc.nextLine();
             System.out.print("Email : ");
-            String email = sc.nextLine();
+            email = sc.nextLine();
             System.out.print("Password : ");
-            String password = sc.nextLine();
+            password = sc.nextLine();
 
             if(userExists(email)){
                 System.out.println("User already exists ");
