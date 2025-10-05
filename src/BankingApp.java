@@ -20,7 +20,7 @@ public class BankingApp {
             Connection connection = DriverManager.getConnection(url,username,password);
             Scanner sc = new Scanner(System.in);
             User user = new User(connection,sc);
-            Accounts accounts  = new Accounts();
+            Accounts accounts  = new Accounts(connection,sc);
             AccountManager accountManager = new AccountManager();
 
             while(true){
