@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Scanner;
 
 public class User {
@@ -47,7 +44,7 @@ public class User {
     }
 
     public boolean userExists(String email){
-        String userExist_query = "SELECT 1 FROM user where email = ? LIMIT 1";
+        String userExist_query = "SELECT 1 FROM user WHERE email = ? LIMIT 1";
         try (PreparedStatement preparedStatement = connection.prepareStatement(userExist_query)){
             preparedStatement.setString(1,email);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
@@ -61,27 +58,23 @@ public class User {
     }
 
     public String login(){
-        System.out.print("Email : ");
+        System.out.print("Enter your registered Email : ");
         String email = sc.nextLine();
-        System.out.print("Password : ");
-        String password = sc.nextLine();
 
-        String login_query = "SELECT * FROM user where email = ? AND password = ?";
+        if (userExists(email)){
+            System.out.print("Enter your password : ");
+            String password = sc.nextLine();
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(login_query)){
-            preparedStatement.setString(1,email);
-            preparedStatement.setString(2,password);
+            String check_password_query = "SELECT 1 FROM user WHERE password = ? LIMIT 1";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(check_password_query)){
+                preparedStatement.setString(1,password);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-                return email;
+                if(resultSet.next()) return email;
             }
-            else {
-                return null;
+            catch (SQLException e) {
+                e.printStackTrace();
             }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
         }
         return null;
     }

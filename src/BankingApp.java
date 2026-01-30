@@ -22,8 +22,9 @@ public class BankingApp {
             System.out.println("2. Login");
             System.out.println("3. Exit");
             System.out.println();
-            System.out.println("Enter your choice : ");
+            System.out.print("Enter your choice : ");
             int choice = sc.nextInt();
+            sc.nextLine();
             switch (choice){
                 case 1:
                     user.register();
@@ -32,8 +33,13 @@ public class BankingApp {
                 case 2:
                     String email = user.login();
                     if(email!=null){
-                        System.out.println("User Logged In !");
+                        System.out.println("User Logged In Successfully!");
                     }
+                    else{
+                        System.out.println();
+                        System.out.println("User not registered. Please register first or check your password again :)");
+                    }
+                    break; //Add break or check again about the gateway to let the user control his transactions or his details;
 
                 case 3:
                     System.out.println("THANKS FOR USING BANKING SYSTEM :)");
