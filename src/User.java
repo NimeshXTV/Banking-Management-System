@@ -60,14 +60,14 @@ public class User {
     public String login(){
         System.out.print("Enter your registered Email : ");
         String email = sc.nextLine();
+        System.out.print("Enter your password : ");
+        String password = sc.nextLine();
 
-        if (userExists(email)){
-            System.out.print("Enter your password : ");
-            String password = sc.nextLine();
+        String check_login_query = "SELECT 1 FROM user WHERE email = ? AND password = ? LIMIT 1";
 
-            String check_password_query = "SELECT 1 FROM user WHERE password = ? LIMIT 1";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(check_password_query)){
-                preparedStatement.setString(1,password);
+            try (PreparedStatement preparedStatement = connection.prepareStatement(check_login_query)){
+                preparedStatement.setString(1,email);
+                preparedStatement.setString(2,password);
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 if(resultSet.next()) return email;
@@ -75,7 +75,6 @@ public class User {
             catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
         return null;
     }
 }

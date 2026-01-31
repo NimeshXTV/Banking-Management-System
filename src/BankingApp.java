@@ -1,15 +1,8 @@
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class BankingApp {
     public static void main(String[] args) {
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e){
-            System.out.println(e.getMessage());
-        }
         Connection connection = DBconnnection.databaseConnection();
         Scanner sc = new Scanner(System.in);
         User user = new User(connection,sc);
